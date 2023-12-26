@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Well being</title>
+
+</head>
+<body>
+<div class="outer">
+  <label class="text-field__label" for="headAche">Насколько от 1 до 10 у вас сейчас болит голова?</label><br><br>
+  <input name="headAche" id="headAche" placeholder="Головная боль" /><br><br>
+</div>
+<div class="outer">
+  <label class="text-field__label" for="pressure">Какое у вас сейчас давление?</label><br><br>
+  <input name="pressure" id="pressure" placeholder="Даление" /><br><br>
+</div>
+<div class="outer">
+  <button class="c-button" onclick="postRequest()">Отправить</button><br><br>
+</div>
+<div class="outer">
+  <button  class="c-button" onclick="getList()">Лист показаний</button><br><br>
+</div>
+<style>
+  .outer {
+    text-align: center;
+  }
+  .c-button {
+    appearance: none;
+    border: 0;
+    border-radius: 5px;
+    background: #EE82EE;
+    color: #fff;
+    padding: 8px 16px;
+    font-size: 16px;
+  }
+</style>
+<script src="js/wellBeing.js"></script>
+<script>
+  document.body.style.background = "Turquoise";
+</script>
+</body>
+</html>
