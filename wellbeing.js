@@ -40,10 +40,10 @@ function getList() {
                 var result = JSON.parse(xhr.responseText);
                 var array = [];
                 for (var i = 0; i < result.length; i++) {
-                    var userHealth = new UserHealthDTO(result[i].headAche,result[i].pressure,result[i].userId,result[i].date);
+                    var userHealth = new UserHealthDTO(result[i].id, result[i].headAche, result[i].pressure, result[i].userId, result[i].date);
                     array.push(userHealth);
                 }
-                var html = array.map((item) => `<li>Головная боль: ${item.headAche}, давление: ${item.pressure}, id пользователя: ${item.userId}, дата: ${item.date} </li><br>`).join('');
+                var html = array.map((item) => `<li><a onclick="update()">Номер строки: ${item.id} Головная боль: ${item.headAche}, давление: ${item.pressure}, id пользователя: ${item.userId}, дата: ${item.date} </a></li><br>`).join('');
                 document.querySelector('ul').innerHTML = html;
             } else {
                 console.log('err', xhr.responseText);
@@ -52,13 +52,54 @@ function getList() {
     };
     xhr.send();
 }
+
 getList();
 
+
+function update() {
+    document.getElementById("update").style.display = "block";
+}
+
+function updateData() {
+    let id=document.getElementById("idForUpdate").value;
+    let pressure = document.getElementById("pressureForUpdate").value;
+    let headAche = document.getElementById("headAcheForUpdate").value;
+
+    var xhr = new XMLHttpRequest();
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var body = {
+        "id": id,
+        "headAche": headAche,
+        "pressure": pressure,
+        "date":  year + "-" + month + "-" + day,
+        "userId": 2
+    }
+    xhr.open("PUT", "http://192.168.1.102:8080/android/putUpdateTable/"+id, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+        }
+    }
+    ;
+    if (id!= "" & headAche != "" & pressure != "") {
+        xhr.send(JSON.stringify(body));
+    } else {
+        alert("Заполните все поля")
+    }
+
+
+}
+
 class UserHealthDTO {
-  constructor(headAche,pressure,userId,date) {
-    this.headAche=headAche;
-    this.pressure=pressure;
-    this.userId=userId;
-    this.date=date;
-  }
+    constructor(id,headAche, pressure, userId, date) {
+        this.id=id;
+        this.headAche = headAche;
+        this.pressure = pressure;
+        this.userId = userId;
+        this.date = date;
+    }
 }

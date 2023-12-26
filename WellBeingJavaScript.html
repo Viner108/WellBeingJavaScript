@@ -17,10 +17,21 @@
 <div class="outer">
   <button class="c-button" onclick="postRequest()">Отправить</button><br><br>
 </div>
-<!--<div class="outer">-->
-<!--  <button  class="c-button" onclick="getList()">Лист показаний</button><br><br>-->
-<!--</div>-->
+<div id="update" class="update">
+  <form>
+    <label for="idForUpdate">Номер строчки:</label>
+    <input type="text" id="idForUpdate">
+    <label for="pressure">Давление:</label>
+    <input type="text" id="pressureForUpdate">
+    <label for="headAche">Головная боль:</label>
+    <input type="text" id="headAcheForUpdate">
+    <button onclick="updateData()">Отправить</button>
+  </form>
+</div>
 <style>
+  .update {
+    display:none;
+  }
   .outer {
     text-align: center;
   }
