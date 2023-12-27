@@ -1,0 +1,7 @@
+body{
+    font-family: "Roboto Light", sans-serif;
+}
+#chart{
+    width: 1300px;
+    height: 500px;
+}

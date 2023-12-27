@@ -28,6 +28,14 @@
     <button onclick="updateData()">Отправить</button>
   </form>
 </div>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="style.css"/>
+<div id="chart"></div>
 <style>
   .update {
     display:none;
@@ -48,8 +56,11 @@
   <h3>Данные:</h3>
 <ul id="data"></ul>
 <script src="./wellbeing.js"></script>
+<script src="./response.js"></script>
 <script>
   document.body.style.background = "Turquoise";
 </script>
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+
 </body>
 </html>
