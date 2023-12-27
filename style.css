@@ -2,7 +2,7 @@ body{
     font-family: "Roboto Light", sans-serif;
 }
 #chart{
-    width: 1000px;
+    width: 2000px;
     height: 500px;
     border: 1px solid black;
 }

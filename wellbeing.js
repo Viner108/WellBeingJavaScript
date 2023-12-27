@@ -100,6 +100,7 @@ class UserHealthDTO {
         this.headAche = headAche;
         this.pressure = pressure;
         this.userId = userId;
-        this.date = date;
+        const date1 = new Date(date).toISOString();
+        this.date=date1.split('T')[0];
     }
 }

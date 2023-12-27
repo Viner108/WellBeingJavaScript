@@ -10,40 +10,37 @@ xhr.onreadystatechange = function () {
         }
         if (xhr.status === 200) {
             var result = JSON.parse(xhr.responseText);
-            var array = [];
+            const data = [];
             for (var i = 0; i < result.length; i++) {
                 var userHealth = new UserHealthDTO(result[i].id, result[i].headAche, result[i].pressure, result[i].userId, result[i].date);
-                array.push(userHealth);
+                data.push(new UserHealthPoint(userHealth.date,userHealth.pressure))
             }
-            const data = [
-                {
-                    x: '2010',
-                    y: 10,
-                },
-                {
-                    x: '2011',
-                    y: 15,
-                },
-                {
-                    x: '2012',
-                    y: 13,
-                },
-                {
-                    x: '2013',
-                    y: 17,
-                },
-                {
-                    x: '2015',
-                    y: 25,
-                },
-            ]
-            new LineChart(data, $chartContainer).create()
+            new LineChart(bblSort(data), $chartContainer).create()
         } else {
             console.log('err', xhr.responseText);
         }
     }
 };
 xhr.send();
+class UserHealthPoint{
+    constructor(x,y){
+        this.x=x;
+        this.y=Number(y.split('/')[0]);
+    }
+}
+function bblSort(arr) {
+    for (var i = 0; i < arr.length; i++) {
+        for (var j = 0; j < (arr.length - i - 1); j++) {
+            if (arr[j].x > arr[j + 1].x) {
+                var temp = arr[j]
+                arr[j] = arr[j + 1]
+                arr[j + 1] = temp
+            }
+        }
+    }
+ 
+    return arr
+}
 
 class Chart {
     createSvgElement(tagName) {
@@ -97,9 +94,9 @@ class LineChart extends Chart {
         })
         return $chartLine
     }
-    createAxisXSeparator() {
+    createAxisXSeparator(){
         const $axisXLine = this.createSvgElement('line')
-        this.setAttribute($axisXLine, {
+        this.setAttribute($axisXLine,{
             x1: 0,
             x2: this.maxWidth,
             y1: this.maxChartHeight + this.topYPadding + this.chartLineStrokeWidth,
@@ -141,26 +138,26 @@ class LineChart extends Chart {
         }
         return $ticks
     }
-    createCircle(el, x, y) {
-        const $circle = this.createSvgElement('circle')
-        this.setAttribute($circle, {
+    createCircle(el, x, y){
+        const $circle=this.createSvgElement('circle')
+        this.setAttribute($circle,{
             r: this.circleRadius,
             cx: x,
             cy: y,
             fill: '#FF5D5B',
-            stroke: 'rgba(255, 160, 170, 0.5)'
+            stroke: 'rgba(255, 160, 170, .5)'
         })
         $circle.dataset.text = `x: ${el.x}, y: ${el.y}`
         $circle.classList.add('circle')
         $circle.dataset.circle = 'true'
         return $circle
     }
-    onCircleOver($circle) {
-        const $tooltip = document.createElement('div')
-        $tooltip.textContent = $circle.dataset.text
+    onCircleOver($circle){
+        const $tooltip=document.createElement('div')
+        $tooltip.textContent = $circle.dataset.text 
         $tooltip.classList.add('tooltip')
         $circle.setAttribute('stroke-width', 15)
-        const popperElement = Popper.createPopper($circle, $tooltip)
+        const popperElement = Popper.createPopper($circle,$tooltip)
         $circle.onmouseout = () => {
             $tooltip.remove()
             $circle.setAttribute('stroke-width', 0)
@@ -184,7 +181,7 @@ class LineChart extends Chart {
         const lineLength = this.maxChartWidth / (this.data.length - 1)
         const yShift = this.minY * this.zoom
 
-        $svg.append(...$ticks, $chartLine, $bottomXLine)
+        $svg.append(...$ticks,$chartLine, $bottomXLine)
         let d = 'M'
         let currentX = 0 + this.horizontalPadding
 
@@ -195,13 +192,13 @@ class LineChart extends Chart {
 
             const $circle = this.createCircle(el, x, y)
             const $bottomXText = this.createSvgElement('text')
-            this.setAttribute($bottomXText, {
+            this.setAttribute($bottomXText,{
                 x: currentX,
-                y: this.maxHeight - 5
+                y:this.maxHeight - 5
             })
             $bottomXText.append(el.x)
 
-            $svg.append($circle, $bottomXText)
+            $svg.append($circle,$bottomXText)
 
             currentX += lineLength
         })
@@ -213,11 +210,11 @@ class LineChart extends Chart {
         this.$container.appendChild($svg)
 
         $svg.onmouseover = (e) => {
-            if (e.target.dataset.circle) {
+            if(e.target.dataset.circle){
                 this.onCircleOver(e.target)
             }
         }
-
+        
         return this
     }
 }
