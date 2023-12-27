@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Well being</title>
-
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 <div class="outer">
@@ -28,39 +34,12 @@
     <button onclick="updateData()">Отправить</button>
   </form>
 </div>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-  href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
-  rel="stylesheet"
-/>
-<link rel="stylesheet" href="style.css"/>
-<div id="chart"></div>
-<style>
-  .update {
-    display:none;
-  }
-  .outer {
-    text-align: center;
-  }
-  .c-button {
-    appearance: none;
-    border: 0;
-    border-radius: 5px;
-    background: #EE82EE;
-    color: #fff;
-    padding: 8px 16px;
-    font-size: 16px;
-  }
-</style>
-  <h3>Данные:</h3>
+<h3>Данные:</h3>
 <ul id="data"></ul>
+<div id="chart"></div>
 <script src="./wellbeing.js"></script>
-<script src="./response.js"></script>
-<script>
-  document.body.style.background = "Turquoise";
-</script>
+<script>document.body.style.background = "Turquoise";</script>
 <script src="https://unpkg.com/@popperjs/core@2"></script>
-
+<script async defer src="./index.js"></script>
 </body>
 </html>
