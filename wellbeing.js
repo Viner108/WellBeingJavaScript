@@ -2,15 +2,22 @@ function postRequest() {
     var xhr = new XMLHttpRequest();
     var headAche = document.getElementById("headAche");
     var pressure = document.getElementById("pressure");
+    var drowsiness = document.getElementById("drowsiness");
     var date = new Date();
     var year = date.getFullYear();
+    if(date.getMonth>9){
     var month = date.getMonth() + 1;
+    }else{
+    var month = date.getMonth()+1;
+        month = "0"+month;
+    }
     var day = date.getDate();
     var body = {
         "headAche": headAche.value,
         "pressure": pressure.value,
         "date": year + "-" + month + "-" + day,
-        "userId": 2
+        "userId": 2,
+        "drowsiness": drowsiness.value
     }
     xhr.open("POST", "http://192.168.1.102:8080/android/postDTO", true);
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -19,7 +26,7 @@ function postRequest() {
             var response = JSON.parse(xhr.responseText);
         }
     }
-    ;
+    
     if (headAche.value != "" & pressure.value != "") {
         xhr.send(JSON.stringify(body));
     } else {
